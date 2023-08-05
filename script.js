@@ -1,7 +1,27 @@
+const container = document.querySelector(".container");
+const restartButton = document.querySelector(".restart");
+
 const gameBoard = (() => {
   const board = ["", "", "", "", "", "", "", "", ""];
   return board;
 })();
+
+function restart() {
+  const winnerText = document.querySelector(".end-text");
+  gameBoard.forEach((_, index) => {
+    gameBoard[index] = ""; // Reset the gameBoard array to empty
+  });
+  const gameBlocks = document.querySelectorAll(".game-block");
+  gameBlocks.forEach((gameBlock) => {
+    gameBlock.textContent = ""; // Clear the marker display in the UI
+  });
+
+  winnerText.textContent = ""; // Clear any previous winner/draw text
+  container.classList.remove('active'); // Hide the form by removing the 'active' class
+  currentPlayerIndex = 0; // Reset the currentPlayerIndex to the first player
+}
+
+restartButton.addEventListener('click', restart);
 
 function createGameBoard() {
   const gameBoardSection = document.querySelector(".game-board");
@@ -9,17 +29,18 @@ function createGameBoard() {
     const gameBlock = document.createElement("div");
     gameBlock.classList.add("game-block");
     gameBlock.setAttribute("data-index", index);
+    gameBlock.addEventListener("click", playersTurn);
     gameBoardSection.appendChild(gameBlock);
   });
 }
 
-function Player(name, marker){
+function Player(name, marker) {
   this.name = name;
   this.marker = marker;
 }
 
 const players = [
-  new Player("player1", "x"), 
+  new Player("player1", "x"),
   new Player("player2", "o")
 ];
 
@@ -52,6 +73,7 @@ function draw() {
 }
 
 function playersTurn(event) {
+  const winnerText = document.querySelector(".end-text");
   const clickedGameBlock = event.target;
   const index = parseInt(clickedGameBlock.getAttribute("data-index"), 10);
   if (gameBoard[index] === "") { // Check if the block is empty
@@ -60,10 +82,12 @@ function playersTurn(event) {
     clickedGameBlock.textContent = currentPlayer.marker; // Display the marker in the UI
 
     if (checkWinner()) {
-      alert(`${currentPlayer.name} wins!`);
+      winnerText.textContent = (`${currentPlayer.name} wins!`);
+      container.classList.add('active');
       // You can also reset the game or take other actions here
     } else if (draw()) {
-      alert("It's a draw!");
+      winnerText.textContent = ("It's a draw!");
+      container.classList.add('active');
       // You can also reset the game or take other actions here
     } else {
       currentPlayerIndex = (currentPlayerIndex + 1) % players.length; // Switch to the next player
@@ -72,6 +96,4 @@ function playersTurn(event) {
 }
 
 const gameBoardSection = document.querySelector(".game-board");
-gameBoardSection.addEventListener("click", playersTurn);
-
 createGameBoard();

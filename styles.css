@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -54,5 +60,66 @@ div {
   justify-content: center;
   align-content: center; 
 }
+.container {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+}
+.container {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Ensure the form is above other elements */
+  opacity: 0;
+  visibility: hidden;
+  cursor: grab;
+}
+
+.container.active {
+  opacity: 1;
+  visibility: visible;
+} 
+
+.game-end {
+    background-color: rgb(236, 236, 236);
+    display: flex;
+    flex-direction: column;
+    border: 2px black;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    height: 40vh;
+    justify-content: center;
+    align-items: center;
+}
 
 
+
+.restart {
+  background-color: lightblue;
+  height: 60px;
+  width: 240px;
+  border-radius: 4px;
+  border: 1px solid black;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+button:hover {
+  filter: brightness(90%);
+}
+
+h3 {
+  display: flex;
+  font-size: 40px;
+  
+}
